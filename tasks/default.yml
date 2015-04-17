@@ -28,3 +28,4 @@
     state=link
     src={{ java_install_dir }}/java.sh
     dest=/etc/profile.d/java.sh
+

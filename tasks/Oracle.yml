@@ -128,3 +128,11 @@
   when: java_default_implementation == 'oracle'
   set_fact:
     java_home={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}
+
+- name: correct java version selected
+  alternatives: name=java path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/jre/bin/java
+  tags: java
+
+- name: correct javac version selected
+  alternatives: name=javac link=/usr/bin/javac path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/bin/javac
+  tags: java

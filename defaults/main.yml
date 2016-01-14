@@ -47,3 +47,6 @@ java_oracle_redis_jre_filename: "jre-{{ java_oracle_version_str_redis }}-linux-x
 java_oracle_redis_jre_sha256sum: 'a8ef4fd8403398f9c2579bb97b5e6643661dabd510e4c3b79529ede9e1f8584a'
 
 java_environment: {}
+
+# Set this installation of java as the default installation
+java_set_default_alternative: false

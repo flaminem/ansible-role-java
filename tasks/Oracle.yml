@@ -133,10 +133,20 @@
   debug: msg="{{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/jre/bin/java"
   tags: java
 
-- name: correct java version selected
-  alternatives: name=java link=/usr/bin/java path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/jre/bin/java
+- name: Select this version of java as default alternative
+  alternatives: name={{item}} link=/usr/bin/{{item}} path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/bin/{{item}}
+  when: java_set_default_alternative
+  with_items: 
+    - java
+    - javac
   tags: java
 
-- name: correct javac version selected
+- name: Select this version of java as default alternative
+  alternatives: name=java link=/usr/bin/java path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/jre/bin/java
+  when: java_set_default_alternative
+  tags: java
+
+- name: Select this version of javac as default alternative
   alternatives: name=javac link=/usr/bin/javac path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/bin/javac
+  when: java_set_default_alternative
   tags: java

@@ -54,7 +54,7 @@
   tags:
     - java
     - download
-  sudo: no
+  become: no
   register: java_oracle_redis_download
   when: java_oracle_redis_exists.rc != 0
   command:

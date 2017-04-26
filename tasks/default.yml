@@ -1,16 +1,7 @@
 ---
 # setup the default Java implementation via system environment
-#- assert: java_default_implementation in ['oracle', 'openjdk']
+#- assert: java_implementation in ['oracle', 'openjdk']
 #  tags: java
-
-- name: Fail on invalid user data
-  tags:
-    - java
-    - download
-  when: java_default_implementation not in ['oracle', 'openjdk']
-  fail:
-    msg="java_default_implementation must be one of 'oracle' or 'openjdk'"
-
 
 - name: Install Java default implementation
   tags: java
@@ -28,3 +19,7 @@
     state=link
     src={{ java_install_dir }}/java.sh
     dest=/etc/profile.d/java.sh
+
+- include: default_Oracle.yml
+  when: java_oracle_when
+

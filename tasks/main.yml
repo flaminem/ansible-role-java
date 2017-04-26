@@ -3,25 +3,27 @@
 #
 #   Fail the play if it runs on an unsupported platform,
 - name: Assert platform is supported
-  tags:
-    - java
-    - download
   assert:
     that:
       - ansible_os_family in ['Debian', 'RedHat']
-      - ansible_architecture in ['x86_64']
+      - ansible_architecture == 'x86_64'
+  tags: [java, download]
 
 
 # Install OpenJDK only if specifically activated.
 - include: OpenJDK.yml
-  when: java_openjdk_when
+  when: java_implementation == 'openjdk'
+  tags: [java]
 
 # Install Oracle JDK only if specifically activated.
 - include: Oracle.yml
-  when: java_oracle_when
+  when: java_implementation == 'oracle'
+  tags: [java]
 
 # Configure the systems default Java implementation if any
 #   implementation has been installed.
 - include: default.yml
   tags: java
-  when: java_openjdk_when or java_oracle_when
+  when: java_set_alternative
+  tags: [java]
+

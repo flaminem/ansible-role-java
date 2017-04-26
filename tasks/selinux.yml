@@ -1,6 +1,8 @@
 ---
 - include_vars: "{{ ansible_os_family }}.yml"
 
+- name: debug
+  debug: msg = "{{ java_package_list_selinux }}"
+
 - name: Install Ansible SELinux requirements
-  with_items: java_package_list_selinux
-  action: "{{ ansible_pkg_mgr }} state=installed name={{ item }}"
+  action: "{{ ansible_pkg_mgr }} state=installed name={{ java_package_list_selinux }}"

@@ -1,8 +1,8 @@
 if [ -z "$JAVA_HOME" ]; then
-{% if java_default_implementation == 'oracle' %}
+{% if java_implementation == 'oracle' %}
   JAVA_HOME="{{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}"
 {% endif %}
-{% if java_default_implementation == 'openjdk' %}
+{% if java_implementation == 'openjdk' %}
   JAVA_HOME="{{ java_install_dir }}/openjdk/{{ java_openjdk_version_str_pkg }}"
 {% endif %}
 fi

@@ -35,12 +35,15 @@
       --status
       {{ ansible_data_path }}/java.sha256sum
 
+- name: debug
+  debug: msg="{{ java_oracle_redis_exists }}"
+
 # Ensure there is no broken download on the local disk
 - name: Remove possible broken Java redis package
   tags:
     - java
     - download
-  when: java_oracle_redis_exists.rc != 0
+  when: not (java_oracle_redis_exists.skipped | default(false)) and java_oracle_redis_exists.rc != 0
   file:
     state=absent
     dest={{ ansible_data_path }}/{{ java_oracle_redis_filename }}
@@ -56,7 +59,7 @@
     - download
   sudo: no
   register: java_oracle_redis_download
-  when: java_oracle_redis_exists.rc != 0
+  when: not (java_oracle_redis_exists.skipped | default(false)) and java_oracle_redis_exists.rc != 0
   command:
     curl
       --location
@@ -121,22 +124,3 @@
     dest={{ java_install_dir }}
 
 
-# Setup a custom fact to allow roles depending on Java to configure
-#   JAVA_HOME variable
-- name: Set JAVA_HOME ansible fact
-  tags: java
-  when: java_default_implementation == 'oracle'
-  set_fact:
-    java_home={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}
-
-- name: Debug
-  debug: msg="{{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/jre/bin/java"
-  tags: java
-
-- name: correct java version selected
-  alternatives: name=java link=/usr/bin/java path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/jre/bin/java
-  tags: java
-
-- name: correct javac version selected
-  alternatives: name=javac link=/usr/bin/javac path={{ java_install_dir }}/oracle/{{ java_oracle_version_str_pkg }}/bin/javac
-  tags: java

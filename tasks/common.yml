@@ -3,34 +3,34 @@
 
 # this directory will contain the Java downloads
 - name: Install Java download directory
-  tags:
-    - java
-    - download
   file:
     state=directory
     mode=2777
     dest={{ ansible_data_path }}
+  tags: [java, download]
 
 
 # Test whether we need to download Java.
 - name: Install Oracle Java redis package sha256sum
-  tags:
-    - java
-    - download
   template:
     src=sha256sum.j2
     dest={{ ansible_data_path }}/java.sha256sum
     mode=0644
+  tags: [java, download]
 
 
 # Updating the package cache at least once is mandatory for apt
 - name: Update apt package cache
-  tags: java
   when: ansible_os_family == 'Debian'
   apt:
     update_cache=yes
     cache_valid_time=3600
+  tags: java
 
 
 # Ansile requirement if SELinux is enabled
 - include: selinux.yml
+  when: ansible_selinux.status == 'enabled'
+
+  
+

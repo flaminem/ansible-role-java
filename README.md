@@ -22,19 +22,18 @@ are running ansible-playbook on to manage nodes (your workstation).
 
 ## Role variables
 
-* ``java_default_implementation``: Configure default Java implementation (default: ``oracle``, values: [``oracle``, ``openjdk``])
-* ``java_default_distribution``: Configure default Java distribution (default: ``jdk``, values: [``jdk``, ``jre``])
+* ``java_implementation``: Choose the Java implementation to install (default: ``oracle``, values: [``oracle``, ``openjdk``])
+* ``java_distribution``: Choose the Java distribution to install (default: ``jdk``, values: [``jdk``, ``jre``])
+* ``java_set_alternative``: If true, configure the system to use this installation of java by default (default: false)
 
 ### OpenJDK
 
-* ``java_openjdk_when``: Run OpenJDK specific automation only when set true (default: ``false``)
 * ``java_openjdk_version_major``: OpenJDK major version (default: "")
 * ``java_openjdk_version_minor``: OpenJDK minor version (default: "")
 * ``java_openjdk_version_patch``: OpenJDK patch version (default: "")
 
 ### Oracle
 
-* ``java_oracle_when`` Run Oracle specific automation only when set true (default: ``true``)
 * ``java_oracle_version_major``: Oracle major version (default: ``1``)
 * ``java_oracle_version_minor``: Oracle minor version (default: ``7``)
 * ``java_oracle_version_patch``: Oracle patch version (default: ``0``)
